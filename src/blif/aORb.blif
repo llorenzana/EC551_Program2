@@ -1,0 +1,7 @@
+.model aOrB
+.inputs a b
+.outputs c
+.names a b c
+1- 1
+-1 1
+.end
