@@ -6,8 +6,28 @@ from blif_to_tt import blif_file_to_tt_file
 script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 
+def booleanArrayFromString(inputString):
+    result = []
+
+    # Iterate through each character in the input string
+    for i in range(len(inputString)):
+        # Check if the current character is a variable
+        if inputString[i].isalpha():
+            # Check if the previous character is a '~'
+            if i > 0 and inputString[i - 1] == '~':
+                result.append(0)  # ~A becomes False
+            else:
+                result.append(1)  # A becomes True
+
+    return result
+
 #funcion to add to main.py
 def writeToBLIF(booleanFunction, filename):
+    '''
+    1) get an array with all inputs and the output
+    2) use + as a delimiter for lines, because each new line is OR'd
+    3) for each block of AND variables, check what the variable is and mark it properly on the line
+    '''
     print("Running writeToBlif on", booleanFunction)
 
     # Gets output names
@@ -19,24 +39,27 @@ def writeToBLIF(booleanFunction, filename):
     
     # Gets input names
     inputs = ""
-    for char in booleanFunction:
-        if char.isalnum(): # ERROR: finds the initial output
-            inputs += char
-    print(inputs)
+    inputsBool = []
+    for index, char in enumerate(booleanFunction):
+        if index >= 2 and char.isalnum(): # Skip the first two characters in the expression because they are the output and the equal
+            inputs += (char + " ")
+
+    # Get input values (true/false)
+    inputBoolArray = booleanArrayFromString(booleanFunction[1:]) # Run function on all characters in the input except for the output
+    print(inputBoolArray)
 
     with open(filename, "a") as file:
         # Append content to the file
-        file.write("This is some text in the new file.\n")
-        file.write("You can add more lines as needed.")
+        file.write(f".names {inputs}{outputs}\n")
+
 
 
 # default
 def main():
-    booleanFunc = "C=~A+B"
+    booleanFunc = "E=B+A+~C+D"
     filename = "test.txt"
 
     writeToBLIF(booleanFunc, filename)
-
 
 if __name__ == "__main__":
     main()
