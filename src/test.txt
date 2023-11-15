@@ -1,5 +1,4 @@
-.names A B C D
-.names A B C D
-.names A B C D
-.names A B C D E
-.names B A C D E
+.names ['A', 'C', 'B']['E']
+.names ['A', 'C', 'B']['E']
+.names ['B', 'A', 'C']['E']
+.names A C B E

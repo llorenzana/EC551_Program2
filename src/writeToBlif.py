@@ -1,4 +1,5 @@
 import os
+import re
 
 from blif_to_tt import blif_file_to_tt_file
 
@@ -24,10 +25,11 @@ def booleanArrayFromString(inputString):
 #funcion to add to main.py
 def writeToBLIF(booleanFunction, filename):
     '''
-    1) get an array with all inputs and the output
+    1) get an array with all inputs and array with the output
     2) use + as a delimiter for lines, because each new line is OR'd
     3) for each block of AND variables, check what the variable is and mark it properly on the line
     '''
+
     print("Running writeToBlif on", booleanFunction)
 
     # Gets output names
@@ -36,27 +38,33 @@ def writeToBLIF(booleanFunction, filename):
         if char == "=":
             break  # Exit the loop when "=" is reached
         outputs += char
+    outputs = list(set(outputs))
     
     # Gets input names
     inputs = ""
     inputsBool = []
     for index, char in enumerate(booleanFunction):
         if index >= 2 and char.isalnum(): # Skip the first two characters in the expression because they are the output and the equal
-            inputs += (char + " ")
+            inputs += (char)
+    inputs = list(set(inputs))
+    print(inputs)
+
+    # Get number of OR clauses and save them
+    clauseArray = [] # matrix where each row represents an AND statement
+    clauseArray = re.findall(r'[^+]+', booleanFunction[2:]) # Run function on all characters in the input except for the output
+    print(clauseArray)
+
 
     # Get input values (true/false)
-    inputBoolArray = booleanArrayFromString(booleanFunction[1:]) # Run function on all characters in the input except for the output
-    print(inputBoolArray)
+    inputBoolArray = booleanArrayFromString(booleanFunction[2:]) # Run function on all characters in the input except for the output
 
     with open(filename, "a") as file:
         # Append content to the file
-        file.write(f".names {inputs}{outputs}\n")
-
-
+        file.write(f".names { ' '.join(inputs + outputs) }\n")
 
 # default
 def main():
-    booleanFunc = "E=B+A+~C+D"
+    booleanFunc = "E=CB~A+AB+~B"
     filename = "test.txt"
 
     writeToBLIF(booleanFunc, filename)
