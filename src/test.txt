@@ -1,4 +1,12 @@
-.names ['A', 'C', 'B']['E']
-.names ['A', 'C', 'B']['E']
-.names ['B', 'A', 'C']['E']
-.names A C B E
+.names C B A E
+110 1
+-11 1
+-0- 1
+.names C B A E
+110 1
+-11 1
+-0- 1
+.names C B A a E
+110- 1
+-1-1 1
+-0-- 1
