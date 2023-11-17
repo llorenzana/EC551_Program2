@@ -86,7 +86,7 @@ def writeToBLIF(booleanFunction, filename):
 
 # default
 def main():
-    booleanFunc = "E=CB~A+aB+~B"
+    booleanFunc = "E=CB~A+aB+~B+A~C"
     filename = "test.txt"
 
     writeToBLIF(booleanFunc, filename)
