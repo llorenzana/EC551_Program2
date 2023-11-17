@@ -15,7 +15,7 @@ The first three lines of the blif are
 .inputs
 .outputs
 
-We use an exclamation mark as a delimiter betweeen lines, as it is not used in blif syntax. We can also further minimize the bits needed
+We use an exclamation mark (!) [00100001] as a delimiter betweeen lines, as it is not used in blif syntax. We can also further minimize the bits needed
 to save the header information by using the filename to store the model name.
 
 Our inputs and outputs are only single letters, so each letter can be stored in 8 bits and then a delimiter can be used to signify to go to the next line.
@@ -23,6 +23,24 @@ Our inputs and outputs are only single letters, so each letter can be stored in 
 The remaining headers we need to handle are the following:
 .names
 .end
+
+.names lines will start with an ampersand (&) [00100110]
+The lines following the declaration will need to some
+
+Here is an example of how it will be represented:
+    .names a b i t
+    00- 1
+    -01 1
+    0-0 1
+
+    [00100110 01100001 01100010 01101001 01110100 00100001] (&abit!)
+    [00110000 00110000 00101101 00100000 00110001 00100001] (00- 1!)
+    [00101101 00110000 00110001 00100000 00110001 00100001] (00- 1!)
+    [00110000 00101101 00110000 00100000 00110001 00100001] (0-0 1!)
+
+.end will be signified with a pound (#) [00100011]
+
+Generate test text here: https://www.rapidtables.com/convert/number/ascii-to-binary.html
 '''
 
 def binaryToText(binaryString):
@@ -83,7 +101,7 @@ def readBitstream():
 # default
 def main():
     # Example usage:
-    binaryString = "01001000 01100101 01101100 01101100 01101111"  # Example: "HELLO" in binary
+    binaryString = "00110000 00110000 00101101 00100000 00110001 00100001"
     textResult = binaryToText(binaryString)
     
     print("Binary:", binaryString)
