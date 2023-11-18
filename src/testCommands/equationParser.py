@@ -3,7 +3,6 @@ from sympy.logic.boolalg import to_dnf
 from itertools import product, combinations
 
 #This function is used to parse and generate minterms based off of the input equations 
-
 def generateMinterms(expression):
     ##used to find the input variables for the given equation
     operators = {"+"} 
@@ -20,7 +19,9 @@ def generateMinterms(expression):
         for i in range(len(binaryterm)):
             minterms.append(binaryterm[i])
     minterms = list(set(minterms))
-    return booleanTerm, variables, sorted(minterms)
+    
+    
+    return simplifyExpression(minterms, variables)
 
 def mintermToBinary(minterm, variables):
     binary = ''
@@ -54,7 +55,29 @@ def generateCombinations(binary, index=0, combinations=None):
 
     return combinations
 
+# number of prime implicants & essential prime implicants
+def simplifyExpression (minterms, variables):
+    expanded_sum_of_minterms = []
+    for minterm in minterms:
+        term = "("
+        for i, value in enumerate(minterm):
+            if value == '0':
+                term += f"~{variables[i]} & "
+            elif value == '1':
+                term += f"{variables[i]} & "
+                
+        # Remove the trailing "&"
+        term = term[:-2]
+        expanded_sum_of_minterms.append(term)
+    simplified = (") | ".join(expanded_sum_of_minterms) + ")")
+    simplified = str(to_dnf(simplified, simplify=True, force=True))
+    
+    return simplified.replace("(", "").replace(")", "").replace("|", "+").replace("&", "").replace(" ", "")
+
+
 # Example usage (assuming input_variables are known)
 expression = " ~A ~B ~C ~D + A ~B ~C ~D + ~B C ~D + B ~C D + B  C  D + ~A B D "  # Example Boolean expression
 
-booleanTerm, variables, minterms = generateMinterms(expression)
+simplified = generateMinterms(expression)
+print(simplified)
+

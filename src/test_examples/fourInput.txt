@@ -1,3 +1,5 @@
+Number of LUTs: 10
+type of LUTs: 4
 inputs: A B C
 outputs: F
 F = A + B + ~C
