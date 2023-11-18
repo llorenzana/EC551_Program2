@@ -1,0 +1,4 @@
+inputs: A B C
+outputs: F
+F = A + B + ~C
+AB + AC + BC
