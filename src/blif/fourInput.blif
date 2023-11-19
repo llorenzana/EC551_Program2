@@ -1,9 +1,6 @@
 .model fourInput
 .inputs A B C D
-.outputs F G H I J K L M N O
-.names B D ~ + D B
-00 1
-00 1
+.outputs F G H P J K L M N R
 .names B D F
 11 1
 00 1
@@ -16,7 +13,7 @@
 0111 1
 1000 1
 0010 1
-.names A B C D I
+.names A B C D P
 1110 1
 1011 1
 0101 1
@@ -45,7 +42,7 @@
 110- 1
 0110 1
 0011 1
-.names B C D A O
+.names B C D A R
 110- 1
 0011 1
 0000 1

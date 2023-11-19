@@ -56,7 +56,11 @@ def main():
         final_output_expressions = combine_assigned_inputs(assigned)
         final_input = combine_outputs(assigned, output_list)
         final_input = final_output_expressions + final_input
-        final_input = final_input[1:]
+
+        outputs, inputs = final_input[0].strip().split(" = ")
+        if len(outputs) > 1:
+            final_input = final_input[1:]
+
         call_write(final_input, int(num_of_LUT[0]), file_name_without_extension)
         writeToBitstream(file_name_without_extension + ".blif")
         print(f"Logic mapping written to blif/{file_name_without_extension}.blif")       
