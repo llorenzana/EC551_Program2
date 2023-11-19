@@ -1,22 +1,52 @@
 .model fourInput
 .inputs A B C D
-.outputs F
-.names J K L F a
-111- 1
----1 1
-.names B D A G J b
-00--- 1
--011- 1
--0--1 1
-11--- 1
-.names A H J c
-111 1
-.names a b c F
-1-- 1
--1- 1
---1 1
-.names A B C D G
-111- 1
-11-1 1
-1-11 1
+.outputs F G H I J K L M N O
+.names B D ~ + D B
+00 1
+00 1
+.names B D F
+11 1
+00 1
+.names D A B C G
+0--- 1
+-100 1
+-001 1
+.names A B D C H
+1110 1
+0111 1
+1000 1
+0010 1
+.names A B C D I
+1110 1
+1011 1
+0101 1
+0010 1
+.names A B C D J
+1111 1
+1010 1
+0100 1
+0001 1
+.names D C A B K
+10-- 1
+-010 1
+1-00 1
+0101 1
+.names A B C D L
+1110 1
+1011 1
+0100 1
+0001 1
+.names A B C D M
+1100 1
+1001 1
+0101 1
+0011 1
+.names A B C D N
+110- 1
+0110 1
+0011 1
+.names B C D A O
+110- 1
+0011 1
+0000 1
 .end
