@@ -1,4 +1,0 @@
-Number of LUTs: 
-type of LUTs: 
-inputs: 
-outputs: 

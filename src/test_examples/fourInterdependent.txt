@@ -1,4 +1,14 @@
-Number of LUTs: 
-type of LUTs: 
-inputs: 
-outputs: 
+Number of LUTs: 40
+type of LUTs: 4
+inputs: A B C D
+outputs: F G H J K L M N P Q
+F = A B ~C D
+G = F ~B C + A ~D
+H = ~F G + B C D
+J = H ~A + ~B ~C D
+K = J F + ~G H
+L = K ~A B + C ~D
+M = L ~F + ~G J
+N = ~M K + A ~B C
+P = N L ~K + ~B ~D
+Q = P M + ~N J
