@@ -1,5 +1,4 @@
 import os
-from sympy import symbols, sympify
 from sympy.logic.boolalg import to_dnf
 
 def read_equations(file_path):
@@ -114,6 +113,79 @@ def simplifyExpression (minterms, variables):
     simplified = (") | ".join(expanded_sum_of_minterms) + ")")
     simplified = str(to_dnf(simplified, simplify=True, force=True))
     return simplified.replace("(", "").replace(")", "").replace("|", "+").replace("&", "").replace(" ", "")
+
+def split_expression(expr, max_inputs):
+
+    # Splits a logic expression into subexpressions, appending expressions with the same first four inputs.
+    # Split the expression by '+' to separate OR clauses
+    booleanTerm = [minterm.strip() for minterm in expr.split("+")]
+    booleanTerm = sorted(booleanTerm, key=len, reverse=True)
+    variables = sorted(list(set(c for term in booleanTerm for c in term if c.isalpha())))
+    LUT = []
+
+    if max_inputs < len(variables): 
+        required_vars = find_required_variables(variables, booleanTerm)
+        grouped_terms = []
+        unique_terms = []   
+        for term in booleanTerm:
+            term_vars = set(c for c in term if c.isalpha())
+            if term_vars.issuperset(required_vars) and count_unique_variables(term) <= max_inputs:
+                running_var = sorted(list(set(c for term in grouped_terms for c in term if c.isalpha())))
+                if term_vars not in running_var and (len(running_var) + sum(1 for val in term_vars if val not in running_var)) <= max_inputs:
+                    grouped_terms.append(term)
+                else:
+                    unique_terms.append(term)
+            else: 
+                unique_terms.append(term)
+        
+        variablesUnique = sorted(list(set(c for term in unique_terms for c in term if c.isalpha())))
+        if max_inputs < len(variablesUnique):  
+            #handles teh case of a lot fo inputs    
+            newgroup = []
+            final_group = []
+            required_vars = find_required_variables(variablesUnique, unique_terms)
+            for term in unique_terms:
+                term_vars = set(c for c in term if c.isalpha())
+                if term_vars.issuperset(required_vars) and count_unique_variables(term) <= max_inputs:
+                    running_var = sorted(list(set(c for term in newgroup for c in term if c.isalpha())))
+                    if  term_vars not in running_var and (len(running_var) + sum(1 for val in term_vars if val not in running_var)) <= max_inputs:
+                        newgroup.append(term)
+                        unique_terms.remove(term)
+                    else: 
+                        final_group.append(term)
+                        unique_terms.remove(term)
+                else: 
+                    running_vargroup = sorted(list(set(c for term in final_group for c in term if c.isalpha())))
+                    if  term_vars not in running_vargroup and (len(running_vargroup) + sum(1 for val in term_vars if val not in running_vargroup)) <= max_inputs:
+                        final_group.append(term)
+                        unique_terms.remove(term)
+
+
+            if newgroup: LUT.append("+".join(newgroup).replace(" ", ""))
+            if final_group: LUT.append("+".join(final_group).replace(" ", ""))
+
+        if unique_terms: LUT.append("+".join(unique_terms).replace(" ", ""))
+        if grouped_terms: LUT.append("+".join(grouped_terms).replace(" ", ""))
+        return list(set(LUT))
+    
+    else: 
+        return expr.replace(" ", "")
+
+def find_required_variables(variables, terms, threshold=0.5):
+    # Find variables that appear in a significant number of terms
+    var_count = {var: 0 for var in variables}
+    for term in terms:
+        for var in var_count:
+            if var in term:
+                var_count[var] += 1
+
+    required_vars = [var for var, count in var_count.items() if count / len(terms) >= threshold]
+    return required_vars
+
+def count_unique_variables(term):
+    # Count unique variables in a term, ignoring negation symbols
+    return len(set(c for c in term if c.isalpha()))
+
 
 def startWrite(file_name_without_extension, input_variables, output_variables):
     output_file_path = file_name_without_extension + ".blif"
