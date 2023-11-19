@@ -1,4 +1,4 @@
-.model fourInput
+.model testfourInput
 .inputs A B C D
 .outputs F
 .names J K L F a

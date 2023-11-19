@@ -13,9 +13,9 @@ os.chdir(script_dir)
 def main():
     
     print("Welcome to our EDA TOOL! \n")
-    print("Would you like to: \n" )
-    print("1. Input a bitstream \n")
-    print("2. Read from a file \n")
+    print("Would you like to: " )
+    print("1. Input a bitstream")
+    print("2. Read from a file")
     choice = input("Enter 1 or 2: ")
     
     if choice == '1': 
@@ -31,7 +31,7 @@ def main():
 
     # Print the list of files
         iter = 0
-        print(f"Select a file to use:")
+        print(f"\nSelect a file to use:")
         for index, file in enumerate(files):
             print(f"{index + 1}: {file}")
 

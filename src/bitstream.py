@@ -77,11 +77,11 @@ def writeToBitstream(filename):
         dotIndex = filename.rfind('.')
         modelName = filename[:dotIndex]
 
-        with open(f'bitstream/{modelName}.txt', 'w') as file:
+        with open(f'bitstream/{modelName}_FROMFILE.txt', 'w') as file:
             file.write(bitstream)
 
-    print(f"File written to bitstream/{modelName}.txt.")
-    return f"bitstream/{modelName}.txt"
+    print(f"File written to bitstream/{modelName}_FROMFILE.txt.")
+    return f"bitstream/{modelName}_FROMFILE.txt"
 
 def readBitstream(): # returns name of new blif file
     # Specify the directory path
@@ -92,7 +92,7 @@ def readBitstream(): # returns name of new blif file
 
    # Print the list of files
     iter = 0
-    print(f"Select a file to use:")
+    print(f"\nSelect a file to use:")
     for index, file in enumerate(files):
         print(f"{index + 1}: {file}")
 
