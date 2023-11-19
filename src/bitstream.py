@@ -107,7 +107,7 @@ def writeToBitstram(filename):
             elif words[0] == ".end":
                 bitstream = bitstream + "00100011"
                 next
-            elif (words[0][0] == "1" or words[0][0] == "0"): # definition for .names
+            elif (words[0][0] == "1" or words[0][0] == "0" or words[0][0] == "1" or words[0][0] == "-"): # definition for .names
                 bitstream = bitstream + textToBinaryAscii(line.strip())
                 bitstream = bitstream + "00100001" # signify end of line
             else:
@@ -121,12 +121,12 @@ def writeToBitstram(filename):
 
     return 0
 
-def readBitstream():
+def readBitstream(): # returns name of new blif file
     # Specify the directory path
-    folder_path = "blif"
+    folderPath = "bitstream"
 
     # Get a list of all files in the folder
-    files = os.listdir(folder_path)
+    files = os.listdir(folderPath)
 
    # Print the list of files
     iter = 0
@@ -145,20 +145,49 @@ def readBitstream():
             break
         else:
             print("Please select a valid file.")
-    return 0
+
+    #process filename selection
+    filePath = "bitstream/" + files[fileChoice]
+    modelName = files[fileChoice]
+
+    # Open and read the file
+    textBitstream = ""
+    with open(filePath, 'r') as file:
+        contents = file.read()
+        textBitstream = binaryToText(contents)
+
+    # Process the bitstream and write to new file
+    print(textBitstream)
+    with open(f"blif/{modelName[:-4]}.blif", 'w') as file:
+        file.write(f'.model {modelName[:-4]}\n')
+
+        # break the bitstream into parts
+        bitstreamLines = textBitstream.split("!")
+        print(bitstreamLines)
+
+        for index, line in enumerate(bitstreamLines):
+            if index == 0: # inputs line
+                addSpaces = ' '.join(line)
+                file.write(f'.inputs {addSpaces}\n')
+            elif index == 1: # outputs line
+                addSpaces = ' '.join(line)
+                file.write(f'.outputs {addSpaces}\n')
+            else:
+                if line[0] == '&':
+                    addSpaces = ' '.join(line[1:])
+                    file.write(f'.names {addSpaces}\n')
+                elif line[0] == '#':
+                    file.write(f'.end')
+                else:
+                    file.write(f'{line}\n')
+
+    return f"{modelName[:-4]}.blif"
 
 # default
 def main():
     # Example usage:
-    textString = "Hello!!"
-
-    textResult = textToBinaryAscii(textString)
-    backToText = binaryToText(textResult)
-    
-    print("Binary:", textResult)
-    print("Text:", backToText)
-
-    writeToBitstram("aORb.blif")
+    # writeToBitstram("aORb.blif")
+    readBitstream()
 
 if __name__ == "__main__":
     main()
