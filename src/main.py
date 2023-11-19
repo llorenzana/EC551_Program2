@@ -46,7 +46,7 @@ def main():
     choice = input("Enter 1 or 2: ")
     
     if choice == '1': 
-    
+        next
     elif choice == '2': 
         filename = "test_examples/" + "fourInput.txt" 
         num_of_LUT, type_of_LUT, equations, file_name_without_extension, input_variables, output_variables = read_equations(filename)
