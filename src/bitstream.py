@@ -157,13 +157,11 @@ def readBitstream(): # returns name of new blif file
         textBitstream = binaryToText(contents)
 
     # Process the bitstream and write to new file
-    print(textBitstream)
     with open(f"blif/{modelName[:-4]}.blif", 'w') as file:
         file.write(f'.model {modelName[:-4]}\n')
 
         # break the bitstream into parts
         bitstreamLines = textBitstream.split("!")
-        print(bitstreamLines)
 
         for index, line in enumerate(bitstreamLines):
             if index == 0: # inputs line
