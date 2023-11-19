@@ -61,6 +61,9 @@ The functions to handle the bitstream are stored in bitstream.py and commented i
 <br/>writeToBitstram(filename)
 <br/>readBitstream()
 
+### BLIF Composition
+
+### Logic Synthesis
 
 ## Examples
 ## References
