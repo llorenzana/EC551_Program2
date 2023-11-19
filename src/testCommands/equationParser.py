@@ -251,6 +251,7 @@ def call_write(final_input, num_LUTs, filename):
             return "Not Possible"
         else:
             writeToBLIF(final_input[i], (filename + '.blif'))
+            
     return "blif write complete"
  
 def main():

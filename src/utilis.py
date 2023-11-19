@@ -257,4 +257,8 @@ def call_write(final_input, num_LUTs, filename):
             return "LUT mapping Not Possible"
         else:
             writeToBLIF(final_input[i], output_file_path)
+            
+    with open(f"blif/{output_file_path}", 'a') as file:
+        file.write(".end")
+        
     return ".blif write complete"
