@@ -32,6 +32,9 @@ def writeToBLIF(booleanFunction, filename):
 
     print("Running writeToBlif on", booleanFunction)
 
+    # remove spaces from booleanFUnction
+    booleanFunction = ''.join(booleanFunction.split())
+
     # Gets output names
     outputs = ""
     for char in booleanFunction:
@@ -60,7 +63,7 @@ def writeToBLIF(booleanFunction, filename):
     # Get input values (true/false)
     inputBoolArray = booleanArrayFromString(booleanFunction[2:]) # Run function on all characters in the input except for the output
 
-    with open(filename, "a") as file:
+    with open(f"blif/{filename}", "a") as file:
         # Append content to the file
         file.write(f".names { ' '.join(inputs + outputs) }")
 
