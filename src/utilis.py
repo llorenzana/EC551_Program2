@@ -1,6 +1,7 @@
 import os
 from sympy.logic.boolalg import to_dnf
 from writeToBlif import writeToBLIF
+
 def read_equations(file_path):
     equations = []
     arbitrary_variable_counter = 0  # Counter for equations without an output variable
@@ -257,4 +258,8 @@ def call_write(final_input, num_LUTs, filename):
             return "LUT mapping Not Possible"
         else:
             writeToBLIF(final_input[i], output_file_path)
+            
+    with open(f"blif/{output_file_path}", 'a') as file:
+        file.write(".end")
+        
     return ".blif write complete"

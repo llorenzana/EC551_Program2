@@ -30,7 +30,7 @@ def textToBinaryAscii(textString):
 
     return binary
 
-def writeToBitstram(filename):
+def writeToBitstream(filename):
     # Construct the path to the file
     filePath = f"blif/{filename}"
 
@@ -80,7 +80,8 @@ def writeToBitstram(filename):
         with open(f'bitstream/{modelName}.txt', 'w') as file:
             file.write(bitstream)
 
-    return 0
+    print(f"File written to bitstream/{modelName}.txt.")
+    return f"bitstream/{modelName}.txt"
 
 def readBitstream(): # returns name of new blif file
     # Specify the directory path
