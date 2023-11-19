@@ -80,7 +80,7 @@ def writeToBitstream(filename):
         with open(f'bitstream/{modelName}_FROMFILE.txt', 'w') as file:
             file.write(bitstream)
 
-    print(f"File written to bitstream/{modelName}_FROMFILE.txt.")
+    print(f"Bitstream written to bitstream/{modelName}_FROMFILE.txt.")
     return f"bitstream/{modelName}_FROMFILE.txt"
 
 def readBitstream(): # returns name of new blif file

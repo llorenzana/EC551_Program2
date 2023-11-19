@@ -14,8 +14,8 @@ def main():
     
     print("Welcome to our EDA TOOL! \n")
     print("Would you like to: " )
-    print("1. Input a bitstream")
-    print("2. Read from a file")
+    print("1. Load a bitstream")
+    print("2. Read input from a file")
     choice = input("Enter 1 or 2: ")
     
     if choice == '1': 
@@ -59,7 +59,8 @@ def main():
         final_input = combine_outputs(assigned, output_list)
         final_input = final_output_expressions + final_input
         call_write(final_input, int(num_of_LUT[0]), file_name_without_extension)
-        writeToBitstream(file_name_without_extension + ".blif")        
+        writeToBitstream(file_name_without_extension + ".blif")
+        print(f"Logic mapping written to blif/{file_name_without_extension}.blif")       
         
     else: 
         print("Invalid choice. Please enter '1' or '2'.")
