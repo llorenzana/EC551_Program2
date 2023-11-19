@@ -1,14 +1,14 @@
 Number of LUTs: 15
 type of LUTs: 4
 inputs: A B C D
-outputs: F G H I J K L M N O 
+outputs: F G H P J K L M N R 
 F =  ~A ~B ~C ~D + A ~B ~C ~D + ~B C ~D + B ~C D + B C  D + ~A B D 
 G = ABC ~D + ~A ~B C D + A ~B ~C D + ~A B ~C ~D
 H = ~A B C D + A ~B ~C ~D + ~A ~B ~C D + A B ~C D
-I = A ~B C D + ~A B ~C D + ~A ~B C ~D + A B C ~D
+P  = A ~B C D + ~A B ~C D + ~A ~B C ~D + A B C ~D
 J = ~A ~B ~C D + A B C D + A ~B C ~D + ~A B ~C ~D
 K = A ~B ~C ~D + ~A B C ~D + AB ~C D + ~A ~B C D
 L = ~A B ~C ~D + A ~B C D + ~A ~B ~C D + A B C ~D
 M = A B ~C ~D + ~A ~B C D + ~A B ~C D + A ~B ~C D
 N = ~A ~B C D + A B ~C ~D + ~A B C ~D + A B ~C D
-O = A ~B ~C D + ~A B C ~D + A B C ~D + ~A ~B ~C ~D
+R = A ~B ~C D + ~A B C ~D + A B C ~D + ~A ~B ~C ~D
