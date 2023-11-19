@@ -58,6 +58,17 @@ def binaryToText(binaryString):
 
     return text
 
+def textToBinaryAscii(textString):
+    binary = ""
+    for char in textString:
+        # Get ASCII value of the character
+        asciiValue = ord(char)
+
+        # Convert ASCII value to binary and concatenate to the result
+        binary += bin(asciiValue)[2:].zfill(8)  # [2:] removes '0b' prefix, zfill(8) pads with zeros to make it 8 bits
+
+    return binary
+
 def writeToBitstram(filename):
     # Construct the path to the file
     filePath = f"blif/{filename}"
@@ -67,8 +78,46 @@ def writeToBitstram(filename):
     # Open and read the file one line at a time
     with open(filePath, 'r') as file:
         for line in file:
-            # Process each line as needed
-            print(line.strip())  # Strip removes the newline character at the end of each line
+            # Split the string into a list of words
+            words = line.split()
+
+            if words[0] == ".model":
+                next
+            elif (words[0] == ".inputs" or words[0] == ".outputs"): # this is always the second line
+                lineLength = len(words)
+
+                # Loop over the array using a for loop
+                for i in range(lineLength):
+                    if i == 0:
+                        next
+                    else:
+                        bitstream = bitstream + textToBinaryAscii(words[i])
+                bitstream = bitstream + "00100001" # signify end of line
+            elif words[0] == ".names":
+                bitstream = bitstream + "00100110" # signify end of line
+                lineLength = len(words)
+
+                # Loop over the array using a for loop
+                for i in range(lineLength):
+                    if i == 0:
+                        next
+                    else:
+                        bitstream = bitstream + textToBinaryAscii(words[i])
+                bitstream = bitstream + "00100001" # signify end of line
+            elif words[0] == ".end":
+                bitstream = bitstream + "00100011"
+                next
+            elif (words[0][0] == "1" or words[0][0] == "0"): # definition for .names
+                bitstream = bitstream + textToBinaryAscii(line.strip())
+                bitstream = bitstream + "00100001" # signify end of line
+            else:
+                next # unsupported BLIF syntax
+        
+        dotIndex = filename.rfind('.')
+        modelName = filename[:dotIndex]
+
+        with open(f'bitstream/{modelName}.txt', 'w') as file:
+            file.write(bitstream)
 
     return 0
 
@@ -101,13 +150,15 @@ def readBitstream():
 # default
 def main():
     # Example usage:
-    binaryString = "00110000 00110000 00101101 00100000 00110001 00100001"
-    textResult = binaryToText(binaryString)
-    
-    print("Binary:", binaryString)
-    print("Text:", textResult)
+    textString = "Hello!!"
 
-    writeToBitstram("aAndB.blif")
+    textResult = textToBinaryAscii(textString)
+    backToText = binaryToText(textResult)
+    
+    print("Binary:", textResult)
+    print("Text:", backToText)
+
+    writeToBitstram("aORb.blif")
 
 if __name__ == "__main__":
     main()
