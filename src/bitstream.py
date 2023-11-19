@@ -119,7 +119,7 @@ def readBitstream(): # returns name of new blif file
         textBitstream = binaryToText(contents)
 
     # Process the bitstream and write to new file
-    with open(f"blif/{modelName[:-4]}.blif", 'w') as file:
+    with open(f"blif/{modelName[:-4]}_fromBitstream.blif", 'w') as file:
         file.write(f'.model {modelName[:-4]}\n')
 
         # break the bitstream into parts
@@ -141,7 +141,7 @@ def readBitstream(): # returns name of new blif file
                 else:
                     file.write(f'{line}\n')
 
-    return f"{modelName[:-4]}.blif"
+    return f"{modelName[:-4]}_fromBitstream.blif"
 
 # default
 def main():

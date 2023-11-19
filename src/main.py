@@ -1,7 +1,5 @@
 import os
-import re
 
-from sympy.logic.boolalg import to_dnf
 from utilis import read_equations, parse_equation, append_variable, assign_inputs, combine_assigned_inputs, combine_outputs, startWrite, call_write
 from bitstream import writeToBitstream, readBitstream
 
