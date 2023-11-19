@@ -1,6 +1,6 @@
 Number of LUTs: 10
 type of LUTs: 4
-inputs: A B C
+inputs: A B C D
 outputs: F
-F = A + B + ~C
-AB + AC + BC
+F = ~A ~B ~C ~D + A ~B ~C ~D + ~B C ~D + B ~C D + B  C  D + ~A B D + F + A B G + B H F + J K L + A H J + J  B  
+G = A B D + A B C + D A C

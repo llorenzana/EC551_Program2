@@ -1,0 +1,3 @@
+.model fourInput
+.inputs A B C D
+.outputs F
