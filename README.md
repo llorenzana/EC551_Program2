@@ -9,6 +9,10 @@
 [Examples](#Examples)
 
 ## Overview
+This program creates a virtual FPGA and “connects it” to a logic synthesis function. The program assigns the logic function to “LUTs” on an FGPA and connects those LUTs to realize the function as requested.
+
+The final FPGA is represented as a .blif file.
+
 ## Organization
 The code is organized into several folders.
 `src` is used to hold our main function, as well as our helper functions.
