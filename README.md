@@ -62,8 +62,80 @@ The functions to handle the bitstream are stored in bitstream.py and commented i
 <br/>readBitstream()
 
 ### BLIF Composition
+To comprise the BLIF file, we:
+1. **File Upload and Access:**
+   
+    - The user selects a .txt file from the test_cases folder comprised in the following format:
 
-### Logic Synthesis
+            Number of LUTs: 
+            type of LUTs: 
+            inputs: 
+            outputs:
+            <list of boolean equations (i.e. F = A B C)
+   
+2. **Reading and Parsing Equations:**
+    - After reading the file, we parse the equations into a tuple containing on item for the output variable, and one for the Boolean SOP
+
+          num_of_LUT, type_of_LUT, equations, file_name_without_extension, input_variables, output_variables = read_equations(filename)
+      
+    - Example Output:
+
+            [ ['F' , [A B C + A B D'] , ...] 
+3. **Start To Write BLIF File:**
+    - From the above, we extract the filename, inputs and outputs and begin to write the top of the .blif file
+
+            startWrite(file_name_without_extension, input_variables, output_variables)
+
+    - Example Output to .blif file:
+      
+            .model <modelname>
+            .inputs <model inputs>
+            .outputs <model outputs>
+           
+4. **Simplify Equations:**
+    - from the output of the read_eqautions, we call parse equations which:
+        - generates a minimal SOP for all equations and stores them in a list
+
+              simplified = parse_equation(equations)
+          
+5. **Appending Output Variable to simplified SOP:**
+    - If the number of input variables in an SOP, is greater than the number of LUT inputs, it will:
+        - sort the SOP into group containing similar inputs
+        - assign it an arbitrary output variable (acts as a wire)
+        - Function call:  
+
+              simplified, output_list= append_variable(simplified, equations, int(type_of_LUT[0]))
+              assigned = assign_inputs(simplified)
+          
+    - If the function contains wires, combine them using OR to final input:
+        - Example, a, b, c represent wires from the broken down equation into F:
+                
+              F = a + b + c
+              
+        - Function Call:
+      
+                final_output_expressions = combine_assigned_inputs(assigned)
+           
+    - Then it will append the equation to the output variable in the following format:
+
+          F = ABC + BCD
+        - Function call:
+
+              final_input = combine_outputs(assigned, output_list)
+
+6. **Combine the Two Sets of Equations to Make One List to Write to .blif:**
+
+       final_input = final_output_expressions + final_input
 
 ## Examples
+We have written 6 test xamples in the src/test_examples folder:
+
+        1: eightInput_fourLUT.txt
+        2: eightInput_sixLUT.txt
+        3: fourInput.txt
+        4: fourInterdependent.txt
+        5: sixInput.txt
+        6: sixInterdependent.txt
+
 ## References
+Programming Assignment 1: https://github.com/llorenzana/EC551_Program1
