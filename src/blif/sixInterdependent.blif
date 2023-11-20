@@ -1,0 +1,33 @@
+.model sixInterdependent
+.inputs A B C D F G
+.outputs H J K L M N P Q R S
+.names A B C D F G H
+110110 1
+.names B C H A D F J
+011--- 1
+---101 1
+.names B C D F H J K
+1101-- 1
+----11 1
+.names a b L
+1- 1
+-1 1
+.names K L H J M
+11-- 1
+--10 1
+.names c d N
+1- 1
+-1 1
+.names M N J K P
+01-- 1
+--01 1
+.names A B G M N P Q
+000--- 1
+---111 1
+.names P Q K N R
+01-- 1
+--10 1
+.names J M L R S
+10-- 1
+--11 1
+.end

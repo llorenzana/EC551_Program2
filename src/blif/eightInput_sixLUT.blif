@@ -1,0 +1,38 @@
+.model eightInput_sixLUT
+.inputs A B C D F G H J
+.outputs K L M N P Q R S T V
+.names A B C D F G H J a
+01111110 1
+.names A B C D F G H J b
+10011011 1
+.names a b K
+1- 1
+-1 1
+.names c d L
+1- 1
+-1 1
+.names e f M
+1- 1
+-1 1
+.names g h N
+1- 1
+-1 1
+.names i j P
+1- 1
+-1 1
+.names k l Q
+1- 1
+-1 1
+.names m n R
+1- 1
+-1 1
+.names o p S
+1- 1
+-1 1
+.names q r T
+1- 1
+-1 1
+.names s t V
+1- 1
+-1 1
+.end
