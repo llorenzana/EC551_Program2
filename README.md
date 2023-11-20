@@ -128,7 +128,7 @@ To comprise the BLIF file, we:
        final_input = final_output_expressions + final_input
 
 ## Examples
-We have written 6 test xamples in the src/test_examples folder:
+We have written 6 test examples in the src/test_examples folder:
 
         1: eightInput_fourLUT.txt
         2: eightInput_sixLUT.txt
