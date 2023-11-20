@@ -1,4 +1,4 @@
-.model eightInput_sixLUT
+.model eightInput_fourLUT
 .inputs A B C D F G H J
 .outputs K L M N P Q R S T V
 .names A B C D F G H J a
